@@ -39,6 +39,17 @@ class PlaceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByTitleSearch(?string $search = null ): ?array
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy("p.name")
+        ->Where ("p.name LIKE :search")
+        ->setParameter("search", $search."%")
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Place[] Returns an array of Place objects
 //     */
