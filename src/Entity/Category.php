@@ -44,6 +44,11 @@ class Category
      */
     private $places;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function __construct()
     {
         $this->places = new ArrayCollection();
