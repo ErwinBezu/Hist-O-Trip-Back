@@ -6,6 +6,7 @@ use App\Entity\Picture;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class PictureCrudController extends AbstractCrudController
@@ -23,6 +24,7 @@ class PictureCrudController extends AbstractCrudController
             TextField::new("name", "Nom de l'image"),
             TextField::new("picture_legend","Légende de l'image"),
             UrlField::new("url","Url de l'image"),
+            AssociationField::new("places","Lieu")
             
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Tag;
 use App\Entity\Place;
 use App\Entity\Century;
 use App\Entity\Picture;
@@ -35,6 +36,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Century', 'fas fa-list', Century::class);
         yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Picture', 'fas fa-list', Picture::class);
-        
+        yield MenuItem::linkToCrud('Tag', 'fas fa-list', Tag::class);
     }
 }
