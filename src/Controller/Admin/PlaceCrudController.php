@@ -22,7 +22,7 @@ class PlaceCrudController extends AbstractCrudController
     {
         return [
             IdField::new("id", "Id de la place")->hideOnForm(),
-            TextField::new("name","Name du lieu"),
+            TextField::new("name","Nom du lieu"),
             TextField::new("subtitle","Sous Titre"),
             TextField::new("coordinate", "Coordonées GPS"),
             TextField::new("adress", "Adresse"),
@@ -34,7 +34,7 @@ class PlaceCrudController extends AbstractCrudController
             TextEditorField::new("description"),
             TextField::new("price","Prix"), 
             TextField::new("opening_hours","Horaires d'ouverture"),
-            TextField::new("accessibility","Accéssibilité"),
+            TextField::new("accessibility","Accessibilité"),
             TextField::new("guided_tour","Visite guidée"),
             AssociationField::new("categories", "Categorie"),
             AssociationField::new("pictures","Image"),
