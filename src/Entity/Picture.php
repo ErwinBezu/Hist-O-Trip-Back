@@ -48,6 +48,12 @@ class Picture
      */
     private $place;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $is_main;
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +127,18 @@ class Picture
     public function setPlace(?Place $place): self
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getIsMain(): ?int
+    {
+        return $this->is_main;
+    }
+
+    public function setIsMain(int $is_main): self
+    {
+        $this->is_main = $is_main;
 
         return $this;
     }
