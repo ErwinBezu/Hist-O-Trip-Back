@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Place;
 use App\Entity\Century;
+use App\Entity\Picture;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +34,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Place', 'fas fa-list', Place::class);
         yield MenuItem::linkToCrud('Century', 'fas fa-list', Century::class);
         yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class);
+        yield MenuItem::linkToCrud('Picture', 'fas fa-list', Picture::class);
         
     }
 }

@@ -21,7 +21,7 @@ class PictureCrudController extends AbstractCrudController
         return [
             IdField::new("id", "Id de l'image")->hideOnForm(),
             TextField::new("name", "Nom de l'image"),
-            TextField::new("picture_legeng","Légende de l'image"),
+            TextField::new("picture_legend","Légende de l'image"),
             UrlField::new("url","Url de l'image"),
             
         ];
