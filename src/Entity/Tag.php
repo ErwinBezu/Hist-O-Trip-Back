@@ -41,6 +41,7 @@ class Tag
 
     public function __construct()
     {
+        $this->created_at = new \DateTimeImmutable();
         $this->places = new ArrayCollection();
     }
 

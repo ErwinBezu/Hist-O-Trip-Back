@@ -28,7 +28,7 @@ class Picture
     private $picture_legend;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=255)
      */
     private $url;
 
@@ -53,6 +53,10 @@ class Picture
      */
     private $is_main;
     
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
