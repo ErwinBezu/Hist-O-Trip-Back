@@ -6,6 +6,7 @@ use App\Entity\Place;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -78,6 +79,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Place::class, mappedBy="users", orphanRemoval=true)
      */
     private $places;
+    
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->places = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
