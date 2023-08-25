@@ -40,7 +40,7 @@ class Place
     private $adress;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=64)
      */
     private $postcode;
 
@@ -142,6 +142,7 @@ class Place
 
     public function __construct()
     {
+        $this->created_at = new \DateTimeImmutable();
         $this->pictures = new ArrayCollection();
         $this->centuries = new ArrayCollection();
         $this->categories = new ArrayCollection();

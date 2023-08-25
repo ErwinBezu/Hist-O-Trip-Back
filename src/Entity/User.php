@@ -79,6 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $places;
 
+
     public function getId(): ?int
     {
         return $this->id;

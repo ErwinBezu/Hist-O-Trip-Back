@@ -28,7 +28,7 @@ class Picture
     private $picture_legend;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=255)
      */
     private $url;
 
@@ -47,6 +47,16 @@ class Picture
      * @ORM\JoinColumn(nullable=false)
      */
     private $place;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $is_main;
+    
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +131,18 @@ class Picture
     public function setPlace(?Place $place): self
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getIsMain(): ?int
+    {
+        return $this->is_main;
+    }
+
+    public function setIsMain(int $is_main): self
+    {
+        $this->is_main = $is_main;
 
         return $this;
     }
