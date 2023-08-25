@@ -49,7 +49,7 @@ class Picture
     private $place;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $is_main;
     

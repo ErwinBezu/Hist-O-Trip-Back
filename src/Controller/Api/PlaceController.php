@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PlaceController extends AbstractController
@@ -20,9 +22,17 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places/categories/{id}", name="app_api_place_category_listByCategories", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function listByCategories(PlaceRepository $PlaceRepository): JsonResponse
+    public function listByCategories(Category $category, PlaceRepository $placeRepository, SerializerInterface $serializer): JsonResponse
     {
-        return $this->json('app_api_place_category_listByCategories', Response::HTTP_OK);
+        // dd($category);
+        $placesByCategory = $category->getPlaces();
+        dd($placesByCategory);
+        // $placesByCategory = $placeRepository->findByCategory($category);
+        // dd($placesByCategory);
+        // $response = $serializer->serialize($placesByCategory, 'json', ['groups' => 'placeWithRelation']);
+
+        // dd($response);
+        return $this->json($placesByCategory, Response::HTTP_OK, ['groups' => 'placeWithRelation']);
     }
 
 
@@ -30,10 +40,11 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places/{id}", name="app_api_place_show", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function show(): JsonResponse
-    // public function show(PlaceRepository $PlaceRepository): JsonResponse
+    public function show(Place $place, SerializerInterface $serializer):Response
     {
-        return $this->json('app_api_place_show', Response::HTTP_OK);
+        $response = $serializer->serialize($place, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['createdAt', 'updatedAt'], 'groups' => 'placeWithRelation']);
+
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
 
 
