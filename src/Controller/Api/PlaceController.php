@@ -22,17 +22,15 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places/categories/{id}", name="app_api_place_category_listByCategories", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function listByCategories(Category $category, PlaceRepository $placeRepository, SerializerInterface $serializer): JsonResponse
+    public function listByCategories(Category $category, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
         // dd($category);
-        $placesByCategory = $category->getPlaces();
-        dd($placesByCategory);
-        // $placesByCategory = $placeRepository->findByCategory($category);
+        $placesByCategory = $placeRepository->findByCategory($category);
         // dd($placesByCategory);
-        // $response = $serializer->serialize($placesByCategory, 'json', ['groups' => 'placeWithRelation']);
+        $response = $serializer->serialize($placesByCategory, 'json', ['groups' => 'placeWithRelation']);
 
         // dd($response);
-        return $this->json($placesByCategory, Response::HTTP_OK, ['groups' => 'placeWithRelation']);
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
 
 

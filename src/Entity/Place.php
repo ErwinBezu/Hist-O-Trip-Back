@@ -6,6 +6,8 @@ use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=PlaceRepository::class)
@@ -16,81 +18,97 @@ class Place
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"placeWithRelation"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"placeWithRelation"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $subtitle;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"placeWithRelation"})
      */
     private $coordinate;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"placeWithRelation"})
      */
     private $postcode;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"placeWithRelation"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"placeWithRelation"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $website;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"placeWithRelation"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $opening_hours;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $accessibility;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"placeWithRelation"})
      */
     private $guided_tour;
 
@@ -106,37 +124,44 @@ class Place
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"placeWithRelation"})
      */
     private $is_valid;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"placeWithRelation"})
      */
     private $slug;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="places")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"placeWithRelation"})
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="place", orphanRemoval=true)
+     * @Groups({"placeWithRelation"})
      */
     private $pictures;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Century::class, inversedBy="places")
+     * @ORM\ManyToMany(targetEntity=Century::class, inversedBy="places", fetch="EAGER")
+     * @Groups({"placeWithRelation"})
      */
     private $centuries;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="places")
+     * @Groups({"placeWithRelation"})
      */
     private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="places")
+     * @Groups({"placeWithRelation"})
      */
     private $tags;
 
@@ -147,6 +172,11 @@ class Place
         $this->centuries = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int

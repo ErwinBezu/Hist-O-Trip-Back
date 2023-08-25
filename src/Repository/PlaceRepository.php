@@ -52,7 +52,16 @@ class PlaceRepository extends ServiceEntityRepository
 
     public function findByCategory($category): array
     {
-        return $this->createQueryBuilder('p')->select('p')->leftJoin('p.categories', 'c')->addSelect('c')->where('c.id = :category_id')->setParameter('category_id', $category->getId())->getQuery()->getResult()
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin('p.categories', 'c')
+            ->innerJoin('p.pictures', 'i')
+            ->addSelect('c')
+            ->addSelect('i')
+            ->where('c.id = :category_id')
+            ->setParameter('category_id', $category->getId())
+            ->getQuery()
+            ->getResult()
         ;
     }
 

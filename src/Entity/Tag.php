@@ -44,6 +44,11 @@ class Tag
         $this->created_at = new \DateTimeImmutable();
         $this->places = new ArrayCollection();
     }
+    
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {

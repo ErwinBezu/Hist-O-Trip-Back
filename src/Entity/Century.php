@@ -49,6 +49,10 @@ class Century
         $this->created_at = new \DateTimeImmutable();
         $this->places = new ArrayCollection();
     }
+    public function __toString()
+    {
+        return $this->century;
+    }
 
     public function getId(): ?int
     {
