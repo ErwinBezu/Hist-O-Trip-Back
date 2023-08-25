@@ -137,7 +137,6 @@ class Place
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="places")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"placeWithRelation"})
      */
     private $users;
 
@@ -148,20 +147,17 @@ class Place
     private $pictures;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Century::class, inversedBy="places", fetch="EAGER")
-     * @Groups({"placeWithRelation"})
+     * @ORM\ManyToMany(targetEntity=Century::class, inversedBy="places")
      */
     private $centuries;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="places")
-     * @Groups({"placeWithRelation"})
      */
     private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="places")
-     * @Groups({"placeWithRelation"})
      */
     private $tags;
 

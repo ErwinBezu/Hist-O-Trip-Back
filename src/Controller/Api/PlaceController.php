@@ -24,12 +24,10 @@ class PlaceController extends AbstractController
      */
     public function listByCategories(Category $category, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
-        // dd($category);
         $placesByCategory = $placeRepository->findByCategory($category);
-        // dd($placesByCategory);
+
         $response = $serializer->serialize($placesByCategory, 'json', ['groups' => 'placeWithRelation']);
 
-        // dd($response);
         return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
 
