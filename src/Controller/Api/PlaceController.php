@@ -18,17 +18,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PlaceController extends AbstractController
 {
     
-    
+
+
     /**
      * @Route("/api/places/categories/{id}", name="app_api_place_category_listByCategories", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function listByCategories(Category $category, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
         $placesByCategory = $placeRepository->findByCategory($category);
-
+        
         $response = $serializer->serialize($placesByCategory, 'json', ['groups' => 'placeWithRelation']);
-
+        
         return new JsonResponse($response, Response::HTTP_OK, [], true);
+        
     }
 
 

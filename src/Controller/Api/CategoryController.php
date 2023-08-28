@@ -2,7 +2,10 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Category;
+use App\Repository\PlaceRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,4 +26,8 @@ class CategoryController extends AbstractController
 
         return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
+
+       
+
+
 }

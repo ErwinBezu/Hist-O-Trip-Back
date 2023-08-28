@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
@@ -14,21 +15,25 @@ class Picture
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"placeWithRelation"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"placeWithRelation"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"placeWithRelation"})
      */
     private $picture_legend;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"placeWithRelation"})
      */
     private $url;
 
