@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Entity\Place;
 use App\Entity\Century;
 use App\Entity\Picture;
@@ -41,5 +42,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Picture', 'fas fa-list', Picture::class);
         yield MenuItem::linkToCrud('Tag', 'fas fa-list', Tag::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class)->setPermission('ROLE_ADMIN');
     }
 }
