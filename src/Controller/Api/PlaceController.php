@@ -71,7 +71,7 @@ class PlaceController extends AbstractController
     }
 
     /**
-     * @Route("/api/places/ajouter", name="app_api_place_add", methods={"POST"} )
+     * @Route("/api/places/add", name="app_api_place_add", methods={"POST"} )
      */
     public function add(PlaceRepository $PlaceRepository, Request $request): JsonResponse
     {

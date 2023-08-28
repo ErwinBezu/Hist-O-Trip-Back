@@ -30,9 +30,13 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginAuthenficatorAuthenticator
+            form_login:
+                login_path: app_security_login
+                check_path: app_security_login
+                default_target_path: app_admin_index
+                always_use_default_target_path: true
             logout:
-                path: app_logout
+                path: app_security_logout
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -45,8 +49,26 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        
+        # ajout d'un lieu depuis le front par un user
+        - { path: ^/api/places/add, roles: ROLE_USER, methods: POST}
+
+        # consultation d'un profil par un user
+        - { path: ^/api/users/\d+, roles: ROLE_USER}
+        
+        # modification d'un profil par un user
+        - { path: ^/api/users/\d+, roles: ROLE_USER, methods: PUT}
+
+        - { path: ^/admin, roles: ROLE_MODERATOR }
+
+        - { path: ^/    }
+
+    # Pour économiser des lignes dans notre ACL et rendre l'application plus logique on hiérarchise les rôles
+    role_hierarchy:
+    # L'admin a les droits du manager
+        ROLE_ADMIN: ROLE_MODERATOR
+    # Le manager a les droits du user (par défaut tous les users sont user à la création dans symfo)
+        ROLE_MODERATOR: ROLE_USER
 
 when@test:
     security:
