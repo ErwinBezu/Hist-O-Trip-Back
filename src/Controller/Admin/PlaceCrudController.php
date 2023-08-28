@@ -35,7 +35,7 @@ class PlaceCrudController extends AbstractCrudController
             TextField::new("price","Prix"), 
             TextField::new("opening_hours","Horaires d'ouverture"),
             TextField::new("accessibility","Accessibilité"),
-            TextField::new("guided_tour","Visite guidée"),
+            IntegerField::new("guided_tour","Visite guidée"),
             AssociationField::new("categories", "Categorie"),
             AssociationField::new("pictures","Image"),
             AssociationField::new("tags","Tag")
