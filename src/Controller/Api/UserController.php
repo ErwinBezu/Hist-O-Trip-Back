@@ -24,4 +24,14 @@ class UserController extends AbstractController
     {
         return $this->json('app_api_user_add', Response::HTTP_OK);
     }
+
+    /**
+     * @Route("/api/users/{id}", name="app_api_user_edit", methods="PUT")
+     */
+    public function edit(): JsonResponse
+    {
+        return $this->json('app_api_user_edit', Response::HTTP_OK);
+    }
+
 }
+
