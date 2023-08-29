@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -22,13 +23,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
+     * @Groups({"placeWithRelation", "edit", "add"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64, unique=true)
-     * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
+     * @Groups({"placeWithRelation", "add"})
      */
     private $email;
 
@@ -41,43 +44,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
+     * @Groups({"placeWithRelation", "add"})
      */
     private $password;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
+     * @Groups({"placeWithRelation", "edit", "add"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
+     * @Groups({"placeWithRelation", "edit", "add"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
+     * @Groups({"placeWithRelation", "edit", "add"})
      */
     private $pseudonym;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
-     * @Groups({"placeWithRelation"})
+     * @Groups({"placeWithRelation", "edit"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"placeWithRelation"})
+     * @Groups({"placeWithRelation", "add"})
      */
     private $is_active;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * 
+     * @Assert\NotBlank
      */
     private $created_at;
 

@@ -26,7 +26,7 @@ class PlaceCrudController extends AbstractCrudController
             TextField::new("subtitle","Sous Titre"),
             TextField::new("coordinate", "Coordonées GPS"),
             TextField::new("adress", "Adresse"),
-            IntegerField::new("postcode","Code Postal"),
+            TextField::new("postcode","Code Postal"),
             TextField::new("city", "Ville"),
             TextField::new("country", "Pays"), 
             TextField::new("website","Site Internet"), 

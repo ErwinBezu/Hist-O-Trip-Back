@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -25,6 +26,7 @@ class Place
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -37,6 +39,7 @@ class Place
     /**
      * @ORM\Column(type="string", length=128)
      * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
      */
     private $coordinate;
 
@@ -49,18 +52,21 @@ class Place
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
      */
     private $postcode;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
      */
     private $country;
 
@@ -79,6 +85,7 @@ class Place
     /**
      * @ORM\Column(type="text")
      * @Groups({"placeWithRelation"})
+     * @Assert\NotBlank
      */
     private $description;
 
@@ -143,7 +150,7 @@ class Place
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="place", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="place", orphanRemoval=true, cascade={"persist"})
      * @Groups({"placeWithRelation"})
      */
     private $pictures;
@@ -155,7 +162,7 @@ class Place
     private $centuries;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="places")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="places", cascade={"persist"})
      * @Groups({"placeWithRelation"})
      */
     private $categories;
@@ -233,12 +240,12 @@ class Place
         return $this;
     }
 
-    public function getPostcode(): ?int
+    public function getPostcode(): ?string
     {
         return $this->postcode;
     }
 
-    public function setPostcode(int $postcode): self
+    public function setPostcode(string $postcode): self
     {
         $this->postcode = $postcode;
 

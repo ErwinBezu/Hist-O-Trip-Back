@@ -3,21 +3,31 @@
 namespace App\Controller\Api;
 
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Entity\Place;
 use App\Entity\Century;
 use App\Entity\Category;
 use App\Repository\PlaceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PlaceController extends AbstractController
 {
-    
+    private $token;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->token = $tokenStorage;
+    }
 
 
     /**
@@ -73,10 +83,43 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places/add", name="app_api_place_add", methods={"POST"} )
      */
-    public function add(PlaceRepository $PlaceRepository, Request $request): JsonResponse
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager): JsonResponse
     {
-    
-        return $this->json('app_api_place_add', Response::HTTP_OK);
+        $jsonContent = $request->getContent();
+        $user = $this->token->getToken()->getUser();
+
+        try {
+            $place = $serializer->deserialize($jsonContent, Place::class, 'json');
+        } catch (NotEncodableValueException $e) {
+            return $this->json(["error" => "JSON INVALID"], Response::HTTP_BAD_REQUEST);
+        }
+
+        $errors = $validator->validate($place);
+
+        if (count($errors) > 0) {
+
+            // je crée un nouveau tableau d'erreur
+            $dataErrors = [];
+
+            foreach ($errors as $error) {
+                // j'injecte dans le tableau à l'index de l'input, les messages d'erreurs qui concernent l'erreur en question
+                $dataErrors[$error->getPropertyPath()][] = $error->getMessage();
+            }
+
+            // je retourne le json avec mes erreurs
+            return $this->json($dataErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $place->setUsers($user);  
+        // dd($place);
+        $entityManager->persist($place);
+
+        $entityManager->flush();
+
+        return $this->json([$place], Response::HTTP_CREATED, [
+            'location' => $this->generateUrl('app_api_place_show', ['id' => $place->getId()])
+        ], [
+            'groups' => 'placeWithRelation'
+        ]);
     }
 
 
