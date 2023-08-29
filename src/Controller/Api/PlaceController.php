@@ -59,12 +59,13 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places", name="app_api_place_list", methods={"GET"} )
      */
-    public function list(PlaceRepository $placeRepository, Request $request): JsonResponse
+    public function list(PlaceRepository $placeRepository, Request $request, SerializerInterface $serializer): Response
     {
-        // $place = $placeRepository->findAllByTitleSearch($request->get("search"));
+        $places = $placeRepository->findAllByTitleSearch($request->get("search"));
 
+        $response = $serializer->serialize($places, 'json', ['groups' => 'placeWithRelation']);
 
-        return $this->json('app_api_place_list', Response::HTTP_OK);
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
 
 

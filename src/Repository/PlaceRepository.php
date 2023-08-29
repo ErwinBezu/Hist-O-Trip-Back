@@ -44,7 +44,7 @@ class PlaceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
         ->orderBy("p.name")
         ->Where ("p.name LIKE :search")
-        ->setParameter("search", $search."%")
+        ->setParameter("search", "%".$search."%")
         ->getQuery()
         ->getResult()
         ;
