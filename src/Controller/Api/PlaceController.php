@@ -7,7 +7,10 @@ use App\Entity\User;
 use App\Entity\Place;
 use App\Entity\Century;
 use App\Entity\Category;
+use App\Repository\CategoryRepository;
+use App\Repository\CenturyRepository;
 use App\Repository\PlaceRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,7 +87,15 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places/add", name="app_api_place_add", methods={"POST"} )
      */
-    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager): JsonResponse
+    public function add(
+            Request $request, 
+            SerializerInterface $serializer, 
+            ValidatorInterface $validator, 
+            EntityManagerInterface $entityManager, 
+            CategoryRepository $categoryRepository,
+            CenturyRepository $centuryRepository,
+            TagRepository $tagRepository
+        ): JsonResponse
     {
         $jsonContent = $request->getContent();
         $user = $this->token->getToken()->getUser();
@@ -93,6 +104,30 @@ class PlaceController extends AbstractController
             $place = $serializer->deserialize($jsonContent, Place::class, 'json');
         } catch (NotEncodableValueException $e) {
             return $this->json(["error" => "JSON INVALID"], Response::HTTP_BAD_REQUEST);
+        }
+
+        // récupération des données non deserializable
+        $content = $request->toArray();
+
+        if (array_key_exists('categoriesId', $content)) {
+            $categoriesId = $content['categoriesId'];
+            foreach ($categoriesId as $categoryId) {
+                $place->addCategory($categoryRepository->find($categoryId));
+            }
+        }
+
+        if (array_key_exists('centuriesId', $content)) {
+            $centuriesId = $content['centuriesId'];
+            foreach ($centuriesId as $centuryId) {
+                $place->addCentury($centuryRepository->find($centuryId));
+            }
+        }
+
+        if (array_key_exists('tagsId', $content)) {
+            $tagsId = $content['tagsId'];
+            foreach ($tagsId as $tagId) {
+                $place->addTag($tagRepository->find($tagId));
+            }
         }
 
         $errors = $validator->validate($place);
@@ -116,7 +151,7 @@ class PlaceController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->json([$place], Response::HTTP_CREATED, [
+        return $this->json($place, Response::HTTP_CREATED, [
             'location' => $this->generateUrl('app_api_place_show', ['id' => $place->getId()])
         ], [
             'groups' => 'placeWithRelation'
