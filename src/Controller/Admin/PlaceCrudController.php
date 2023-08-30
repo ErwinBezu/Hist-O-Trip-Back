@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Place;
+use Doctrine\DBAL\Types\TextType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -48,8 +49,8 @@ class PlaceCrudController extends AbstractCrudController
             ])->renderExpanded(),
             AssociationField::new("categories", "Categorie"),
             AssociationField::new("pictures","Image"),
-            AssociationField::new("tags","Tag")
-
+            AssociationField::new("tags","Tag"),
+            TextField::new("slug", "slug")
         ];
     }
   
