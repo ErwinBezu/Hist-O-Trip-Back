@@ -5,6 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Place;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -35,7 +38,14 @@ class PlaceCrudController extends AbstractCrudController
             TextField::new("price","Prix"), 
             TextField::new("opening_hours","Horaires d'ouverture"),
             TextField::new("accessibility","Accessibilité"),
-            IntegerField::new("guided_tour","Visite guidée"),
+            ChoiceField::new("guided_tour","visite guidée")->setChoices([
+                "oui" => "1",
+                "non" => "0"
+            ])->renderExpanded(),
+            ChoiceField::new("is_valid","Valide")->setChoices([
+                "oui" => "1",
+                "non" => "0"
+            ])->renderExpanded(),
             AssociationField::new("categories", "Categorie"),
             AssociationField::new("pictures","Image"),
             AssociationField::new("tags","Tag")

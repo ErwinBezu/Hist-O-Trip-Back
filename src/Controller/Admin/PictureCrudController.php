@@ -26,10 +26,10 @@ class PictureCrudController extends AbstractCrudController
             TextField::new("picture_legend","Légende de l'image"),
             UrlField::new("url","Url de l'image"),
             ChoiceField::new("is_main","Image principale")->setChoices([
-                "non" => "0",
-                "oui" => "1"
-            ]),
-            AssociationField::new("place","Lieu")
+                "oui" => "1",
+                "non" => "0"
+            ])->renderExpanded(),
+            AssociationField::new("place","Lieu"),
             
         ];
     }
