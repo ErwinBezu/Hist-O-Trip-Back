@@ -65,6 +65,62 @@ class PlaceRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByFilter($datas)
+    {
+        // on créer le query builder dans une variable
+        $qb = $this->createQueryBuilder('p');
+        // on sélectione la table 'place' avec son alias
+        $qb->select('p');
+
+        /* Exemple de requète manuel
+        $qb->innerJoin('p.categories', 'ca');
+        $qb->addSelect('ca');
+        $qb->andwhere('ca.id = :ca_id0 OR ca.id = :ca_id1');
+        $qb->setParameter('ca_id0', $datas['categories'][0]);
+        $qb->setParameter('ca_id1', $datas['categories'][1]);
+        
+        $qb->innerJoin('p.centuries', 'ce');
+        $qb->addSelect('ce');
+        $qb->andwhere('ce.id = :ce_id0');
+        $qb->setParameter('ce_id0', $datas['centuries'][0]);
+        */
+        
+        // requète complètement dynamique
+        // on boucle sur les datas, $entity permet de dynamiser la requète et ne faire qu'une seule boucle
+        foreach ($datas as $entity => $data) {
+            // si l'occurence n'est pas null ou vide on commence à contruire la requète
+            if ($data) {
+                // récupération des 2 premières lettre de la clé pour dynamiser les alias
+                $entityAlias = substr($entity, 0, 2);
+                // on joint la table concernée et on lui affecte l'alias
+                $qb->innerJoin('p.'.$entity, $entityAlias);
+                // on sélectionne l'entité
+                $qb->addSelect($entityAlias);
+                // on initialise la variable "where" avec une 1ere occurence
+                $where = $entityAlias.'.id = :'.$entityAlias.'_id0';
+                // on initialise la variable $parameters avec une 1ere occurence
+                $parameters[$entityAlias.'_id0'] = $data[0];
+                // si $data contient plus d'une valeur on boucle à partir de la 2ème occurence
+                // pour concaténer le reste de la requète dans la variable $where et on ajoute 
+                // le paramètre correspondant au tableau $parameters
+                if (count($data) > 1) {
+                    for ($i = 1; $i < count($data); $i++) {
+                        $where = $where . ' OR '. $entityAlias.'.id = :'.$entityAlias.'_id'.$i;
+                        $parameters[$entityAlias.'_id'.$i] = $data[$i];
+                    }
+                }
+                // on ajoute la requète au query builder
+                $qb->andWhere($where);
+            }
+        }
+        // on boucle sur les paramètres pour les binder
+        foreach ($parameters as $index => $parameter) {
+            $qb->setParameter($index, $parameter);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Place[] Returns an array of Place objects
 //     */

@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class PlaceCrudController extends AbstractCrudController
 {
@@ -35,7 +36,7 @@ class PlaceCrudController extends AbstractCrudController
             TextField::new("country", "Pays"), 
             TextField::new("website","Site Internet"), 
             TextField:: new("phone", "Téléphone"),
-            TextEditorField::new("description"),
+            TextareaField::new("description"),
             TextField::new("price","Prix"), 
             TextField::new("opening_hours","Horaires d'ouverture"),
             TextField::new("accessibility","Accessibilité"),

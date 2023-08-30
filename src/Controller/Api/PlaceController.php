@@ -75,13 +75,21 @@ class PlaceController extends AbstractController
     /**
      * @Route("/api/places/filter", name="app_api_place_filter", methods={"GET"} )
      */
-    public function filter(Category $category, Century $century, Tag $tag, Place $place): JsonResponse
-    
+    public function filter(Request $request, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
-        // if (!)
-        //$places = $filter->getPlaces();
+        $data['categories'] = $request->query->get('category');
+        $data['centuries'] = $request->query->get('century');
+        $data['tags'] = $request->query->get('tag');
         
-        return $this->json('app_api_place_filter', Response::HTTP_OK);
+        if ($data['categories'] || $data['centuries'] || $data['tags']) {
+            $places = $placeRepository->findByFilter($data);
+        } else {
+            return $this->json(['test' => 'aucun paramètres'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $response = $serializer->serialize($places, 'json', ['groups' => 'placeWithRelation']);
+        
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
 
     /**
