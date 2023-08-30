@@ -53,6 +53,9 @@ security:
         # ajout d'un lieu depuis le front par un user
         - { path: ^/api/places/add, roles: ROLE_USER, methods: POST}
 
+        # consultation d'un profil user par le JWT
+        - { path: ^/api/places/@me, roles: ROLE_USER}
+
         # consultation d'un profil par un user
         - { path: ^/api/users/\d+, roles: ROLE_USER}
         

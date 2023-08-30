@@ -15,11 +15,17 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 
 class UserController extends AbstractController
 {
+    private $token;
 
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->token = $tokenStorage;
+    }
     /**
      * @Route("/api/users/{id}", name="app_api_user_show", methods="GET", requirements={"id"="\d+"})
      */
@@ -28,9 +34,23 @@ class UserController extends AbstractController
     $response = $serializer->serialize($user, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['createdAt', 'updatedAt'], 'groups' => 'placeWithRelation']);
 
         return new JsonResponse($response, Response::HTTP_OK, [], true);
-    }    
+    }
 
+    /**
+     * @Route("/api/users/@me", name="app_api_user_showByEmail", methods="GET")
+     */
+    public function showByEmail(SerializerInterface $serializer): Response
+    {
+        if ($this->token->getToken()) {
+            $user = $this->token->getToken()->getUser();
+        } else {
+            return $this->json(['code' => 401, 'message' => 'JWT Token not found'], Response::HTTP_UNAUTHORIZED);
+        }
+    
+        $response = $serializer->serialize($user, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['createdAt', 'updatedAt'], 'groups' => 'placeWithRelation']);
 
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
+    }
 
     /**
      * @Route("/api/users/signup", name="app_api_user_add", methods="POST")
