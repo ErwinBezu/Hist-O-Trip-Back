@@ -25,3 +25,4 @@ services:
     App\Service\MyMailerService:
         arguments:
             $sender: '%env(string:SENDER)%'
+            $recipient: '%env(string:RECIPIENT)%'

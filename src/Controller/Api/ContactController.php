@@ -36,7 +36,6 @@ class ContactController extends AbstractController
             "message" => $content['message'],
             "pseudonym" => $content['pseudonym']
             ],
-            "maude.meury@oclock.school"
         );
 
         if ($response) {

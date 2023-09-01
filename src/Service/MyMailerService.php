@@ -11,12 +11,14 @@ class MyMailerService
 {
     private $mailer;
     private $sender;
+    private $recipient;
 
 
-    public function __construct(MailerInterface $mailer, string $sender)
+    public function __construct(MailerInterface $mailer, string $sender, string $recipient)
     {
         $this->mailer = $mailer;
         $this->sender = $sender;
+        $this->recipient = $recipient;
     }
 
     /**
@@ -27,14 +29,14 @@ class MyMailerService
      * @param string $to person who will received the email
      */
 
-    public function send(string $subject, string $template, array $context, string $to)
+    public function send(string $subject, string $template, array $context)
     {
         // j'ai une instance d'un email
         $email = (new TemplatedEmail())
         // l'email de départ, sur mailjet c'est le mail qui a crée le compte
         ->from($this->sender)
         // destinataire
-        ->to($to)
+        ->to($this->recipient)
         // sujet
         ->subject($subject)
         // contenu en html
