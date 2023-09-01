@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upload d'une image{% endblock %}
+
+{% block body %}
+
+<h1>Adding a new product</h1>
+
+{{ form_start(form) }}
+<button class="btn btn-success my-2">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+{% endblock %}
