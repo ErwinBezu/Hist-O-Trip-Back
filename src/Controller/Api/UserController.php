@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use Doctrine\Inflector\Inflector;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,7 +56,14 @@ class UserController extends AbstractController
     /**
      * @Route("/api/users/signup", name="app_api_user_add", methods="POST")
      */
-    public function add(UserRepository $userRepository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): JsonResponse
+    public function add(
+        UserRepository $userRepository, 
+        Request $request, 
+        SerializerInterface $serializer, 
+        ValidatorInterface $validator, 
+        EntityManagerInterface $entityManager, 
+        UserPasswordHasherInterface $passwordHasher
+        ): JsonResponse
     {
         $jsonContent = $request->getContent();
 
@@ -107,20 +115,25 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/api/users/{id}", name="app_api_user_edit", methods="PUT")
+     * @Route("/api/users/{id}", name="app_api_user_edit", methods="PATCH")
      */
-    public function edit(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager): JsonResponse
+    public function edit(Request $request, User $user, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager): JsonResponse
     {
-        // Récupération du json en brut
-        $jsonContent = $request->getContent();
-
-        //  Transformation du json en entité user
-
-        try {
-            $user = $serializer->deserialize($jsonContent, User::class, 'json');
-        } catch (NotEncodableValueException $e) {
-            return $this->json(["error"=>"JSON INVALID"], Response::HTTP_BAD_REQUEST);
+        // Récupération du json en tableau
+        $content = $request->toArray();
+        
+        foreach ($content as $k => $p) {
+                if (property_exists($user, $k)) {
+                    $user->{'set' . ucfirst($k)}($p);
+            }
         }
+
+        // //  Transformation du json en entité user
+        // try {
+        //     $user = $serializer->deserialize($jsonContent, User::class, 'json');
+        // } catch (NotEncodableValueException $e) {
+        //     return $this->json(["error"=>"JSON INVALID"], Response::HTTP_BAD_REQUEST);
+        // }
 
         // Détection des erreurs 
         $errors = $validator->validate($user);
