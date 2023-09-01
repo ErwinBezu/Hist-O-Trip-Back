@@ -55,7 +55,14 @@ class UserController extends AbstractController
     /**
      * @Route("/api/users/signup", name="app_api_user_add", methods="POST")
      */
-    public function add(UserRepository $userRepository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): JsonResponse
+    public function add(
+        UserRepository $userRepository, 
+        Request $request, 
+        SerializerInterface $serializer, 
+        ValidatorInterface $validator, 
+        EntityManagerInterface $entityManager, 
+        UserPasswordHasherInterface $passwordHasher
+        ): JsonResponse
     {
         $jsonContent = $request->getContent();
 
