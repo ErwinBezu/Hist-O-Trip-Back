@@ -3,17 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Place;
-use Doctrine\DBAL\Types\TextType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class PlaceCrudController extends AbstractCrudController
 {
@@ -22,37 +18,44 @@ class PlaceCrudController extends AbstractCrudController
         return Place::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $place = new Place();
+        $place->setUsers($this->getUser());
+
+        return $place;
+    }
+
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new("id", "Id de la place")->hideOnForm(),
             TextField::new("name","Nom du lieu"),
-            TextField::new("subtitle","Sous Titre"),
-            TextField::new("coordinate", "Coordonées GPS"),
-            TextField::new("adress", "Adresse"),
+            TextField::new("subtitle","Sous Titre")->hideOnIndex(),
+            TextField::new("coordinate", "Coordonées GPS")->hideOnIndex(),
+            TextField::new("adress", "Adresse")->hideOnIndex(),
             TextField::new("postcode","Code Postal"),
             TextField::new("city", "Ville"),
             TextField::new("country", "Pays"), 
-            TextField::new("website","Site Internet"), 
-            TextField:: new("phone", "Téléphone"),
-            TextareaField::new("description"),
-            TextField::new("price","Prix"), 
-            TextField::new("opening_hours","Horaires d'ouverture"),
-            TextField::new("accessibility","Accessibilité"),
+            TextField::new("website","Site Internet")->hideOnIndex(), 
+            TextField:: new("phone", "Téléphone")->hideOnIndex(),
+            TextareaField::new("description")->hideOnIndex(),
+            TextField::new("price","Prix")->hideOnIndex(), 
+            TextField::new("opening_hours","Horaires d'ouverture")->hideOnIndex(),
+            TextField::new("accessibility","Accessibilité")->hideOnIndex(),
             ChoiceField::new("guided_tour","visite guidée")->setChoices([
                 "oui" => "1",
                 "non" => "0"
-            ])->renderExpanded(),
+            ])->renderExpanded()->hideOnIndex(),
             ChoiceField::new("is_valid","Valide")->setChoices([
                 "oui" => "1",
                 "non" => "0"
             ])->renderExpanded(),
-            AssociationField::new("categories", "Categorie"),
-            AssociationField::new("pictures","Image"),
-            AssociationField::new("tags","Tag"),
-            TextField::new("slug", "slug")
+            AssociationField::new("categories", "Categorie")->hideOnIndex(),
+            AssociationField::new("pictures","Image")->hideOnIndex(),
+            AssociationField::new("tags","Tag")->hideOnIndex(),
+            SlugField::new("slug", "slug")->setTargetFieldName('name')->hideOnIndex(),
         ];
     }
-  
 }
