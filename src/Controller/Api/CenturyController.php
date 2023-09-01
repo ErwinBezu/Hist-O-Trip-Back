@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Century;
 use App\Repository\CenturyRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,4 +24,5 @@ class CenturyController extends AbstractController
 
         return new JsonResponse($response, Response::HTTP_OK, [], true);
     }
+
 }

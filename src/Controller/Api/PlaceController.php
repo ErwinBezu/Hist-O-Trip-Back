@@ -47,6 +47,45 @@ class PlaceController extends AbstractController
     }
 
 
+    /**
+     * @Route("/api/places/centuries/{id}", name="app_api_place_century_listByCenturies", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function listByCenturies(Century $century, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
+    {
+        $placesByCentury = $placeRepository->findByCentury($century);
+        
+        $response = $serializer->serialize($placesByCentury, 'json', ['groups' => 'placeWithRelation']);
+        
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
+        
+    }
+
+    /**
+     * @Route("/api/places/tags/{id}", name="app_api_place_tag_listByTags", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function listByTags(Tag $tag, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
+    {
+        $placesByTag = $placeRepository->findByTag($tag);
+        
+        $response = $serializer->serialize($placesByTag, 'json', ['groups' => 'placeWithRelation']);
+        
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
+        
+    }
+
+        /**
+     * @Route("/api/places/centuries/{period}", name="app_api_place_tag_listByPeriod", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function listByPeriods(Century $century, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
+    {
+        $placesByPeriod = $placeRepository->findByPeriod($century);
+        
+        $response = $serializer->serialize($placesByPeriod, 'json', ['groups' => 'placeWithRelation']);
+        
+        return new JsonResponse($response, Response::HTTP_OK, [], true);
+        
+    }
+
 
     /**
      * @Route("/api/places/{id}", name="app_api_place_show", methods={"GET"}, requirements={"id"="\d+"})

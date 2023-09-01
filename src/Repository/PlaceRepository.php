@@ -65,6 +65,52 @@ class PlaceRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByCentury($century): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin('p.centuries', 'c')
+            ->innerJoin('p.pictures', 'i')
+            ->addSelect('c')
+            ->addSelect('i')
+            ->where('c.id = :century_id')
+            ->setParameter('century_id', $century->getId())
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByTag($tag): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin('p.tags', 't')
+            ->innerJoin('p.pictures', 'i')
+            ->addSelect('t')
+            ->addSelect('i')
+            ->where('t.id = :tag_id')
+            ->setParameter('tag_id', $tag->getId())
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByPeriod($century): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin('p.centuries', 'c')
+            ->innerJoin('p.pictures', 'i')
+            ->addSelect('c')
+            ->addSelect('i')
+            ->where('c.period = :century_period')
+            ->setParameter('century_period', $century->getPeriod())
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     public function findByFilter($datas)
     {
         // on créer le query builder dans une variable
