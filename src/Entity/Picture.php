@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PictureRepository;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Picture
 {
@@ -37,6 +40,12 @@ class Picture
      * @Groups({"placeWithRelation"})
      */
     private $url;
+
+    /**
+     *@Vich\UploadableField(mapping="upload_images", fileNameProperty="url")
+     * @var File|null
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -159,5 +168,21 @@ class Picture
         $this->is_main = $is_main;
 
         return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updated_at = new \DateTimeImmutable();
+        }
     }
 }
