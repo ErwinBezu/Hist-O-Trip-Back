@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    upload_images: '%kernel.project_dir%/assets/images'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,3 +26,11 @@ services:
         arguments:
             $sender: '%env(string:SENDER)%'
             $recipient: '%env(string:RECIPIENT)%'
+    
+    App\EventSubscriber\UploadImageSubscriber:
+        arguments:
+            $credentials: {
+                publicKey: '%env(string:IK_PUBLIC_KEY)%',
+                privateKey: '%env(string:IK_PRIVATE_KEY)%',
+                urlEndpoint: '%env(string:IK_URL_END_POINT)%'
+            }

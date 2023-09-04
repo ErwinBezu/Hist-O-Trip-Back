@@ -9,6 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PictureCrudController extends AbstractCrudController
 {
@@ -24,6 +26,7 @@ class PictureCrudController extends AbstractCrudController
             IdField::new("id", "Id de l'image")->hideOnForm(),
             TextField::new("name", "Nom de l'image"),
             TextField::new("picture_legend","Légende de l'image"),
+            TextField::new('imageFile', "Envoyer une image depuis votre système")->setFormType(VichImageType::class)->hideOnIndex(),
             UrlField::new("url","Url de l'image"),
             ChoiceField::new("is_main","Image principale")->setChoices([
                 "oui" => "1",
