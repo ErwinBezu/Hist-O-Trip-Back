@@ -112,7 +112,7 @@ class PlaceController extends AbstractController
 
 
     /**
-     * @Route("/api/places/filter", name="app_api_place_filter", methods={"GET"} )
+     * @Route("/api/places/filter", name="app_api_place_filter", methods={"POST"} )
      */
     public function filter(Request $request, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
