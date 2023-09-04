@@ -116,9 +116,12 @@ class PlaceController extends AbstractController
      */
     public function filter(Request $request, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
-        $data['categories'] = $request->query->get('category');
-        $data['centuries'] = $request->query->get('century');
-        $data['tags'] = $request->query->get('tag');
+        $content = $request->toArray();
+        // dd($content);
+        
+        $data['categories'] = $content['categoriesId'];
+        $data['centuries'] = $content['centuriesId'];
+        $data['tags'] = $content['tagsId'];
         
         if ($data['categories'] || $data['centuries'] || $data['tags']) {
             $places = $placeRepository->findByFilter($data);

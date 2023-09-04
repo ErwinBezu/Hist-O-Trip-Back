@@ -60,7 +60,7 @@ security:
         - { path: ^/api/users/\d+, roles: ROLE_USER}
         
         # modification d'un profil par un user
-        - { path: ^/api/users/\d+, roles: ROLE_USER, methods: PUT}
+        - { path: ^/api/users/\d+, roles: ROLE_USER, methods: PATCH}
 
         - { path: ^/admin, roles: ROLE_MODERATOR }
 
