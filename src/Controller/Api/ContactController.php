@@ -2,15 +2,12 @@
 
 namespace App\Controller\Api;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PlaceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\MyMailerService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 class ContactController extends AbstractController
 {
@@ -19,9 +16,6 @@ class ContactController extends AbstractController
      */
     public function post(
         Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator,
-        EntityManagerInterface $entityManager,
         MyMailerService $mailer
     ): Response {
 
@@ -44,7 +38,28 @@ class ContactController extends AbstractController
             return $this->json('failure', Response::HTTP_BAD_REQUEST);
 
         }
+    }
 
+    /**
+     * @Route("/api/requete/{placeId}", name="app_api_contact_postBackOffice")
+     */
+    public function postBackOffice(MyMailerService $mailer, $placeId, PlaceRepository $placeRepository)
+    {
+        $place = $placeRepository->find($placeId);
 
+        $content = "Un modérateur a besoin de complément pour le lieu : ".$place->getName()." avec l'id : ".$place->getId();
+
+        $response = $mailer->send(
+            'Message du backoffice d\'Histotrip',
+            "emails/create_newMessage.html.twig",
+            ["lastname" => 'modo',
+            "firstname" => 'modo',
+            "mail" => 'modo@histotrip.fr',
+            "message" => $content,
+            "pseudonym" => 'modo'
+            ],
+        );
+
+        return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 }
