@@ -8,6 +8,7 @@ use App\Entity\Place;
 use App\Entity\Century;
 use App\Entity\Picture;
 use App\Entity\Category;
+use App\Repository\PlaceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -17,15 +18,23 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
+    private $placeRepository;
+
+    public function __construct(PlaceRepository $placeRepository)
+    {
+        $this->placeRepository = $placeRepository;
+    }
+    
     /**
      * @Route("/admin", name="app_admin_index")
      */
     public function index(): Response
     {
+        $placesNoActived = $this->placeRepository->findBy(['is_valid' => 0], ['created_at' => 'ASC']);
         // return parent::index();
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
 
-        return $this->redirect($routeBuilder->setController(PlaceCrudController::class)->generateUrl());
+        return $this->render('admin/index.html.twig', ['placesNoActived' => $placesNoActived]);
     }
 
     public function configureDashboard(): Dashboard
