@@ -1,0 +1,23 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-6">
+            <h3>Lieux a validé</h3>
+            <ol>
+                {% for place in placesNoActived %}
+                    <li>
+                        <a href="{{ ea_url()
+                                    .setController('App\\Controller\\Admin\\PlaceCrudController')
+                                    .setAction('edit')
+                                    .setEntityId(place.id)}}">{{ place.name }}</a> - {{ place.createdAt|date('d/m/Y') }}
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+{% endblock %}
