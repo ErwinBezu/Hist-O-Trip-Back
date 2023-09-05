@@ -107,6 +107,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->places = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->pseudonym;
+    }
 
     public function getId(): ?int
     {

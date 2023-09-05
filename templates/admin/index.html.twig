@@ -1,23 +1,23 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block page_title %}
-    Dashboard
+    <h1 class="text-center">Tableau de bord</h1>
 {% endblock %}
 
 {% block main %}
     <div class="row">
-        <div class="col-6">
-            <h3>Lieux a validé</h3>
-            <ol>
+        <div class="col-12">
+            <h3>Lieux historiques à valider : {{ placesNoActived|length }}</h3>
+            <ul>
                 {% for place in placesNoActived %}
-                    <li>
+                    <li class="my-2">
                         <a href="{{ ea_url()
                                     .setController('App\\Controller\\Admin\\PlaceCrudController')
                                     .setAction('edit')
-                                    .setEntityId(place.id)}}">{{ place.name }}</a> - {{ place.createdAt|date('d/m/Y') }}
+                                    .setEntityId(place.id)}}">{{ place.name }}</a> - créé par {{ place.users }} <span class="small">le {{ place.createdAt|date('d/m/Y') }}</span>
                     </li>
                 {% endfor %}
-            </ol>
+            </ul>
         </div>
     </div>
 {% endblock %}

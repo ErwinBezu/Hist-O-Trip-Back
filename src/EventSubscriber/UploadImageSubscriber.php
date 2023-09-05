@@ -67,8 +67,10 @@ class UploadImageSubscriber implements EventSubscriberInterface
                 "file" => fopen($filePath, "r"),
                 "fileName" => $entity->getUrl(),
             ]);
-                
-            $entity->setUrl($imageUrl);
+            
+            $url = json_decode(json_encode($uploadFile), true)['result']['url'];
+
+            $entity->setUrl($url);
 
             $this->manager->persist($entity);
             $this->manager->flush();
