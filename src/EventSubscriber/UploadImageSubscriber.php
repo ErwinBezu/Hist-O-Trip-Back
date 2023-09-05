@@ -58,7 +58,7 @@ class UploadImageSubscriber implements EventSubscriberInterface
                 $this->credentials['privateKey'],
                 $this->credentials['urlEndpoint'],
             );
-
+            
             $imageUrl = $imageKit->url([
                 'path' => '/'.$entity->getUrl()
             ]);

@@ -18,6 +18,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
+    
+
     private $placeRepository;
 
     public function __construct(PlaceRepository $placeRepository)
@@ -46,11 +48,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Place', 'fas fa-list', Place::class);
-        yield MenuItem::linkToCrud('Century', 'fas fa-list', Century::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Picture', 'fas fa-list', Picture::class);
-        yield MenuItem::linkToCrud('Tag', 'fas fa-list', Tag::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Place', 'fas fa-paper-plane', Place::class);
+        yield MenuItem::linkToCrud('Century', 'fas fa-list', Century::class);
+        yield MenuItem::linkToCrud('Category', 'fas fa-list-timeline', Category::class);
+        yield MenuItem::linkToCrud('Picture', 'fas fa-images', Picture::class);
+        yield MenuItem::linkToCrud('Tag', 'fas fa-tags', Tag::class);
+        yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
     }
 }
