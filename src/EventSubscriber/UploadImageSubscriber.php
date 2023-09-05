@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UploadImageSubscriber implements EventSubscriberInterface
@@ -27,14 +28,27 @@ class UploadImageSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            AfterEntityPersistedEvent::class => ['uploadImage'],
+            AfterEntityPersistedEvent::class => ['EntityPersistEvent'],
+            AfterEntityUpdatedEvent::class => ['EntityUploadEvent'],
         ];
     }
 
-    public function uploadImage(AfterEntityPersistedEvent $event)
+    public function EntityPersistEvent(AfterEntityPersistedEvent $event)
     {
         $entity = $event->getEntityInstance();
 
+        $this->uploadImage($entity);
+    }
+    
+    public function EntityUploadEvent(AfterEntityUpdatedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+
+        $this->uploadImage($entity);
+    }
+
+    public function uploadImage($entity)
+    {
         if ($entity instanceof Picture) {
             
             $filePath = $this->parameterBag->get('kernel.project_dir').'/public/images/upload/'.$entity->getUrl();
