@@ -53,6 +53,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('lastname', 'Nom'),
             TextField::new('firstname', 'Prénom'),
             TextField::new('pseudonym', 'Pseudo'),
+            TextField::new('password'),
             UrlField::new('avatar', "Url de l'avatar"),
             ChoiceField::new("is_active","Actif")->setChoices([
                 "oui" => "1",
