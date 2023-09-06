@@ -71,6 +71,7 @@ class PlaceCrudController extends AbstractCrudController
                 "non" => "0"
             ])->renderExpanded(),
             AssociationField::new("categories", "Categorie")->hideOnIndex(),
+            AssociationField::new("centuries", "Epoque")->hideOnIndex(),
             AssociationField::new("pictures","Image")->hideOnIndex(),
             AssociationField::new("tags","Tag")->hideOnIndex(),
             SlugField::new("slug", "slug")->setTargetFieldName('name')->hideOnIndex(),
