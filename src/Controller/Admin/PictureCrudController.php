@@ -17,19 +17,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 class PictureCrudController extends AbstractCrudController
 {
    
-    public function configureActions(Actions $actions) : Actions
-    {
-        $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
+    // public function configureActions(Actions $actions) : Actions
+    // {
+    //     $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
 
-        $user = $this->getUser();
-        $userRole = $user->getRoles();
+    //     $user = $this->getUser();
+    //     $userRole = $user->getRoles();
 
-        if (!in_array('ROLE_ADMIN', $userRole)) {
-            $actions->disable(Action::NEW, Action::EDIT, Action::DELETE);
-        }
+    //     if (!in_array('ROLE_ADMIN', $userRole)) {
+    //         $actions->disable(Action::NEW, Action::EDIT, Action::DELETE);
+    //     }
 
-        return $actions;
-    }   
+    //     return $actions;
+    // }   
 
     public static function getEntityFqcn(): string
     {
