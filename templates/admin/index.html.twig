@@ -15,7 +15,10 @@
                                     .setController('App\\Controller\\Admin\\PlaceCrudController')
                                     .setAction('edit')
                                     .setEntityId(place.id)}}">{{ place.name }}</a> - créé par {{ place.users }} <span class="small">le {{ place.createdAt|date('d/m/Y') }}</span>
-                         - <a type="submit" class="btn btn-primary" href="{{ path('app_api_contact_postBackOffice', {'placeId': place.id}) }}">Requète admin</a>
+                         - {% if "ROLE_ADMIN" not in user.getRoles() %}
+                         <a type="submit" class="btn btn-primary" href="{{ path('app_api_contact_postBackOffice', {'placeId': place.id}) }}">Requète admin</a>
+                            {% endif %}
+                         
                     </li>
                 {% endfor %}
             </ul>

@@ -36,7 +36,7 @@ class DashboardController extends AbstractDashboardController
         // return parent::index();
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
 
-        return $this->render('admin/index.html.twig', ['placesNoActived' => $placesNoActived]);
+        return $this->render('admin/index.html.twig', ['placesNoActived' => $placesNoActived, 'user' => $this->getUser()]);
     }
 
     public function configureDashboard(): Dashboard
