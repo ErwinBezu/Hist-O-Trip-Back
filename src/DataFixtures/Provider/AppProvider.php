@@ -157,7 +157,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => 1,
             "isValid" => 1,
-            "slug" => "Mémorial-de-Caen",
+            "slug" => "memorial-de-caen",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Le_M%C3%A9morial_de_Caen.jpg/1280px-Le_M%C3%A9morial_de_Caen.jpg",
                 "picture_legend" => "Le Mémorial de Caen./François Monier — Fonds photographique du Mémorial de Caen./CC BY-SA 4.0",
@@ -178,7 +178,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null, 
             "isValid" => 1,
-            "slug" => "Mémorial-de-Verdun-Champ-de-Bataille",
+            "slug" => "memorial-de-verdun-Champ-de-Bataille",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/M%C3%A9morial_de_Verdun_nouveau.jpg/1920px-M%C3%A9morial_de_Verdun_nouveau.jpg",
                 "picture_legend" => "Vue extérieure du Mémorial de Verdun après sa rénovation en 2016/Jean-Marie Mangeot — © Mémorial de Verdun/CC BY-SA 3.0",
@@ -199,7 +199,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => 1,
             "isValid" => 1,
-            "slug" => "Monastère-de-Brou",
+            "slug" => "monastere-de-brou",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Monast%C3%A8re_royal_de_Brou_%28%C3%A9glise%29_%281%29.JPG/2560px-Monast%C3%A8re_royal_de_Brou_%28%C3%A9glise%29_%281%29.JPG",
                 "picture_legend" => "Vue de l'église du monastère./Benoît Prieur/CC 0",
@@ -220,7 +220,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Château-de-Castelnaud",
+            "slug" => "chateau-de-castelnaud",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Vue_d%27ensemble_Ch%C3%A2teau_de_Castelnaud.jpg/1920px-Vue_d%27ensemble_Ch%C3%A2teau_de_Castelnaud.jpg",
                 "picture_legend" => "Château de Castelnaud/Château de Castelnaud - Musée de la guerre au Moyen Âge./CC BY-SA 3.0",
@@ -241,7 +241,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Château-de-Beynac",
+            "slug" => "chateau-de-Beynac",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Ch%C3%A2teau_de_Beynac_%28Dordogne%29.jpg/1920px-Ch%C3%A2teau_de_Beynac_%28Dordogne%29.jpg",
                 "picture_legend" => "Le château de Beynac/Gentil Hibou — Travail personnel/CC BY-SA 3.0",
@@ -262,7 +262,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null, 
             "isValid" => 1,
-            "slug" => "Maison-d-Izieu",
+            "slug" => "maison-d-izieu",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Maison_Enfants_Izieu_5.jpg/1920px-Maison_Enfants_Izieu_5.jpg",
                 "picture_legend" => "Mémorial des enfants d'Izieu/Chabe01/CC BY-SA 4.0",
@@ -283,7 +283,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Centre-Historique-de-la-Resistance-et-de-la-déporation",
+            "slug" => "centre-historique-de-la-resistance-et-de-la-deporation",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/d/d0/Lyon_7e_Cour_Centre_Berthelot_Entree_CHRD_%40Laurent_Vella.jpg",
                 "picture_legend" => "Entrée du CHRD située dans la cour du Centre Berthelot/Laurent Vella/CC BY-SA 4.0",
@@ -304,7 +304,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Mémorial-National-de-la-Prison-de-Montluc",
+            "slug" => "memorial-national-de-la-prison-de-montluc",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Prison_Militaire_Montluc_Lyon.jpg/1024px-Prison_Militaire_Montluc_Lyon.jpg",
                 "picture_legend" => "Prison Militaire de Montluc à Lyon/© Xavier Caré / Wikimedia Commons/CC BY-SA 3.0",
@@ -325,7 +325,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Centre-Historique-minier-de-Lewarde",
+            "slug" => "centre-historique-minier-de-lewarde",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Lewarde_-_Fosse_Delloye_des_mines_d%27Aniche_%28324%29.JPG/1920px-Lewarde_-_Fosse_Delloye_des_mines_d%27Aniche_%28324%29.JPG",
                 "picture_legend" => "Vue générale de la partie extractive./Jérémy Jännick — Travail personnel/Domaine Public",
@@ -346,7 +346,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Le-musée-de-l'abri-de-Hatten",
+            "slug" => "le-musee-de-l-abri-de-hatten",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Fort_Schoenenbourg_FRA_001.jpg/1920px-Fort_Schoenenbourg_FRA_001.jpg",
                 "picture_legend" => "L'entrée des munitions de l'ouvrage./ignis — Travail personnel/GFDL,cc-by-sa-2.5,2.0,1.0",
@@ -367,7 +367,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 1,
-            "slug" => "Fort-L-Écluse",
+            "slug" => "fort-l-ecluse",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Fort_l_Ecluse.jpg/1024px-Fort_l_Ecluse.jpg",
                 "picture_legend" => "Fort l’Écluse, à Léaz (Ain, Rhône-Alpes, France), depuis la route D 908./© Yann Forget / Wikimedia Commons/CC BY-SA 4.0",
@@ -388,7 +388,7 @@ class AppProvider
             "accessibility" => null, 
             "guided_tour" => null,
             "isValid" => 0,
-            "slug" => "La-ligne-Maginot-Fort-de-Schoenenbourg",
+            "slug" => "la-ligne-maginot-fort-de-schoenenbourg",
             "picture" => [
                 "url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Fort_Schoenenbourg_FRA_001.jpg/1920px-Fort_Schoenenbourg_FRA_001.jpg",
                 "picture_legend" => "L'entrée des munitions de l'ouvrage./ignis — Travail personnel/GFDL,cc-by-sa-2.5,2.0,1.0",
