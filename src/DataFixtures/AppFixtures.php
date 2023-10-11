@@ -28,9 +28,10 @@ class AppFixtures extends Fixture
         // TODO : créer 20 lieux historiques (voir sources), 18 catégories (voirs sources), 5 tags, 30 siècles
 
         $faker = Factory::create("fr_FR");
+        // a custom faker provider, for our specific datas
         $faker->addProvider(new AppProvider());
 
-        // pour créer un lieu, il faut créer les catégories, les tags, les users, les siècles
+        // before create places, must create categories, tags, periods and users
         
         // ! USER
         $userList = [];

@@ -113,12 +113,13 @@ class PlaceRepository extends ServiceEntityRepository
 
     public function findByFilter($datas)
     {
-        // on créer le query builder dans une variable
+        // integrating the query builder in a variable
         $qb = $this->createQueryBuilder('p');
-        // on sélectione la table 'place' avec son alias
+        // select the 'place' table by aliasing it
         $qb->select('p');
 
-        /* Exemple de requète manuel
+        /* Example of a manual query for categuory's table
+
         $qb->innerJoin('p.categories', 'ca');
         $qb->addSelect('ca');
         $qb->andwhere('ca.id = :ca_id0 OR ca.id = :ca_id1');
@@ -129,41 +130,45 @@ class PlaceRepository extends ServiceEntityRepository
         $qb->addSelect('ce');
         $qb->andwhere('ce.id = :ce_id0');
         $qb->setParameter('ce_id0', $datas['centuries'][0]);
+
+        3 requests of this type are needed to perform the custom query
+        and each query must have a dynamic variable for indentification
         */
         
-        // requète complètement dynamique
-        // on boucle sur les datas, $entity permet de dynamiser la requète et ne faire qu'une seule boucle
+        // fully dynamic request
+        // we loop over $datas, we retrieve the key and the values that will be useful
         foreach ($datas as $entity => $data) {
-            // si l'occurence n'est pas null ou vide on commence à contruire la requète
+            // if the occurrence is not null or empty, we start building the query
             if ($data) {
-                // récupération des 2 premières lettre de la clé pour dynamiser les alias
+                // retrieve the first 2 letters of the key to boost aliases
                 $entityAlias = substr($entity, 0, 2);
-                // on joint la table concernée et on lui affecte l'alias
+                // join the table concerned and assign it a dynamic alias
                 $qb->innerJoin('p.'.$entity, $entityAlias);
-                // on sélectionne l'entité
+                // select the entity
                 $qb->addSelect($entityAlias);
-                // on initialise la variable "where" avec une 1ere occurence
+                // initialise the 1st occurrence in the "where" variable
                 $where = $entityAlias.'.id = :'.$entityAlias.'_id0';
-                // on initialise la variable $parameters avec une 1ere occurence
+                // initialise the 1st occurrence in the $parameters variable
                 $parameters[$entityAlias.'_id0'] = $data[0];
-                // si $data contient plus d'une valeur on boucle à partir de la 2ème occurence
-                // pour concaténer le reste de la requète dans la variable $where et on ajoute 
-                // le paramètre correspondant au tableau $parameters
+                // if $data contains more than one value, we loop from the 2nd occurrence
+                // to concatenate the rest of the request in the $where variable  
+                // and add the corresponding parameter to the $parameters array
                 if (count($data) > 1) {
                     for ($i = 1; $i < count($data); $i++) {
                         $where = $where . ' OR '. $entityAlias.'.id = :'.$entityAlias.'_id'.$i;
                         $parameters[$entityAlias.'_id'.$i] = $data[$i];
                     }
                 }
-                // on ajoute la requète au query builder
+                // add the query to the query builder
                 $qb->andWhere($where);
             }
         }
-        // on boucle sur les paramètres pour les binder
+        // loop over the parameters to bind them (prevent sql injection)
         foreach ($parameters as $index => $parameter) {
             $qb->setParameter($index, $parameter);
         }
 
+        // return the result as an array
         return $qb->getQuery()->getResult();
     }
 

@@ -117,18 +117,20 @@ class PlaceController extends AbstractController
     public function filter(Request $request, PlaceRepository $placeRepository, SerializerInterface $serializer): Response
     {
         $content = $request->toArray();
-        // dd($content);
         
+        // reformating body request
         $data['categories'] = $content['categoriesId'];
         $data['centuries'] = $content['centuriesId'];
         $data['tags'] = $content['tagsId'];
         
+        // prevent empty body request
         if ($data['categories'] || $data['centuries'] || $data['tags']) {
             $places = $placeRepository->findByFilter($data);
         } else {
             return $this->json(['test' => 'aucun paramètres'], Response::HTTP_BAD_REQUEST);
         }
 
+        // formating response by serializing the query result
         $response = $serializer->serialize($places, 'json', ['groups' => 'placeWithRelation']);
         
         return new JsonResponse($response, Response::HTTP_OK, [], true);
