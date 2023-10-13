@@ -119,16 +119,17 @@ class PlaceController extends AbstractController
         $content = $request->toArray();
         
         // reformating body request
+        if (!$content["categoriesId"] || !$content["centuriesId"] || !$content["tagsId"]) {
+            return $this->json([
+                'statut' => 400,
+                'message' => "Body's request must contain this keys : 'categoriesId', 'centuriesId' and 'tagsId' with an array for value"
+            ], Response::HTTP_BAD_REQUEST);
+        }
         $data['categories'] = $content['categoriesId'];
         $data['centuries'] = $content['centuriesId'];
         $data['tags'] = $content['tagsId'];
-        
-        // prevent empty body request
-        if ($data['categories'] || $data['centuries'] || $data['tags']) {
-            $places = $placeRepository->findByFilter($data);
-        } else {
-            return $this->json(['test' => 'aucun paramètres'], Response::HTTP_BAD_REQUEST);
-        }
+
+        $places = $placeRepository->findByFilter($data);
 
         // formating response by serializing the query result
         $response = $serializer->serialize($places, 'json', ['groups' => 'placeWithRelation']);
