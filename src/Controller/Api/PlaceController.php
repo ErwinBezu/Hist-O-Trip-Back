@@ -119,7 +119,7 @@ class PlaceController extends AbstractController
         $content = $request->toArray();
         
         // reformating body request
-        if (!$content["categoriesId"] || !$content["centuriesId"] || !$content["tagsId"]) {
+        if (is_null($content["categoriesId"]) || is_null($content["centuriesId"]) || is_null($content["tagsId"])) {
             return $this->json([
                 'statut' => 400,
                 'message' => "Body's request must contain this keys : 'categoriesId', 'centuriesId' and 'tagsId' with an array for value"
